@@ -1,0 +1,6 @@
+{
+  "name": "Buku Patroli Security",
+  "description": "Buku Laporan Patroli Security Digital dengan Fitur Tanda Tangan dan Cetak PDF.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
