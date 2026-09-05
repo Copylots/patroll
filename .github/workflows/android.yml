@@ -31,11 +31,12 @@ jobs:
         if [ -n "$KEYSTORE_BASE64" ]; then
           echo "Decoding keystore from GitHub Secrets..."
           echo "$KEYSTORE_BASE64" | base64 --decode > debug.keystore
+        elif [ -f "debug.keystore.base64" ]; then
+          echo "Decoding keystore from workspace base64..."
+          cat debug.keystore.base64 | base64 --decode > debug.keystore
         else
-          echo "No custom keystore secret found, falling back to workspace default base64..."
-          if [ -f "debug.keystore.base64" ]; then
-            cat debug.keystore.base64 | base64 --decode > debug.keystore
-          fi
+          echo "No keystore source found, dynamically generating a new debug.keystore..."
+          keytool -genkey -v -keystore debug.keystore -storepass android -keypass android -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
         fi
 
     - name: Build Debug APK
